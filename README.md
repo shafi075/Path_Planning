@@ -1,79 +1,116 @@
-# Path Planning Algorithms: A*, Dijkstra, and Greedy Best-First Search (BFS)
+# Path Planning Algorithms
 
-## Project Overview
-
-This project implements three classical path planning algorithms—A*, Dijkstra, and Greedy Best-First Search (BFS)—used in robot navigation and AI for finding the shortest path between two points in a grid-based environment. Each of these algorithms has its own strengths and weaknesses in terms of efficiency, optimality, and real-world application.
-
-The project includes Python implementations of these algorithms, simulations of their performance, and visualizations of their pathfinding process. You can experiment with each algorithm to understand their differences and use them in real-world robotic applications.
+This project implements three path planning algorithms: **A\* (A-star)**, **Dijkstra**, and **Greedy Best-First Search (BFS)**, using **Pygame** for visualizing the algorithms. Each algorithm finds the shortest path from a start node to a goal node in a grid-based environment.
 
 ## Table of Contents
-
 - [Introduction](#introduction)
-- [Algorithms](#algorithms)
-  - [A* Algorithm](#1-a-algorithm)
-  - [Dijkstra's Algorithm](#2-dijkstras-algorithm)
-  - [Greedy Best-First Search](#3-greedy-best-first-search)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Simulations](#simulations)
-- [Contributing](#contributing)
-- [License](#license)
+- [A\* Algorithm](#a-algorithm)
+  - [Explanation](#explanation-1)
+  - [Time Complexity](#time-complexity)
+  - [Formula](#formula)
+- [Dijkstra's Algorithm](#dijkstras-algorithm)
+  - [Explanation](#explanation-2)
+  - [Time Complexity](#time-complexity-1)
+  - [Formula](#formula-1)
+- [Greedy Best-First Search](#greedy-best-first-search)
+  - [Explanation](#explanation-3)
+  - [Time Complexity](#time-complexity-2)
+  - [Formula](#formula-2)
 
 ## Introduction
+Path planning algorithms are fundamental for navigating agents through complex environments. These algorithms aim to compute the shortest path between a start point and a goal point, avoiding obstacles. Here, we explore three different algorithms, each with its unique approach to finding the path.
 
-In the context of robotics and AI, path planning refers to the process of finding a viable route from a start position to a goal position, avoiding obstacles along the way. This project showcases three fundamental path planning algorithms—A*, Dijkstra, and Greedy BFS—each with different approaches to searching for optimal or near-optimal paths.
+## A* Algorithm
 
-- **A***: Widely used due to its balance of optimality and efficiency.
-- **Dijkstra**: Guarantees the shortest path but may take longer due to exploring all possible nodes.
-- **Greedy BFS**: Focuses on speed, often finding suboptimal solutions quickly.
+### Explanation
+The **A\*** algorithm is one of the most efficient and widely used pathfinding algorithms. It combines the benefits of Dijkstra's algorithm and Greedy BFS by considering both the cost to reach a node and the estimated cost to the goal.
 
-## Algorithms
+A\* uses a **heuristic function** to estimate the remaining distance from the current node to the goal. This heuristic helps prioritize exploring nodes that are likely to lead to the goal, making it more efficient than Dijkstra's algorithm, which explores all nodes equally.
 
-### 1. A* Algorithm
+A\* works by maintaining two key values for each node:
+- **g(n)**: the actual cost to reach node `n` from the start.
+- **h(n)**: the estimated cost to reach the goal from node `n` (heuristic).
 
-The A* algorithm is a search algorithm that finds the shortest path between two points using a heuristic. It combines the advantages of Dijkstra's algorithm and Greedy BFS by considering both the actual cost to reach a node and an estimate of the remaining distance to the goal. This combination makes A* one of the most efficient pathfinding algorithms, providing optimal paths while avoiding unnecessary exploration.
+The algorithm uses a priority queue to always explore the node with the lowest **f(n)** value, where:
 
-- **Heuristic Function (h)**: Typically the Euclidean distance or Manhattan distance between the current node and the goal.
-- **Cost Function (g)**: The actual cost to reach a node from the start.
-- **Total Cost (f)**: The sum of both g and h (i.e., f(n) = g(n) + h(n)).
+f(n) = g(n) + h(n)
 
-A* guarantees the shortest path as long as the heuristic is admissible (it never overestimates the distance to the goal).
 
-**Time Complexity**: O(b^d), where b is the branching factor and d is the depth of the shortest path.
+### Time Complexity
+The time complexity of A\* depends on the heuristic function:
+- In the worst case (when the heuristic is not very effective or too optimistic), the time complexity is **O(b^d)**, where `b` is the branching factor and `d` is the depth of the solution.
+- In the best case (with an optimal heuristic), the time complexity can be reduced to **O(d)**.
 
-### 2. Dijkstra's Algorithm
+### Formula
+For A\*, the total cost function **f(n)** is calculated as:
 
-Dijkstra's Algorithm is one of the most famous algorithms for finding the shortest path in a graph. It works by expanding nodes in all directions, giving priority to the nodes with the lowest accumulated cost. Unlike A*, Dijkstra’s algorithm doesn’t use a heuristic function, which means it explores a larger portion of the graph compared to A*, especially in cases where the goal is far from the starting point.
+f(n) = g(n) + h(n)
 
-- **Cost Function (g)**: Dijkstra relies solely on the cost to reach a node from the start, ensuring it explores every node at least once with the least possible cost.
 
-Since Dijkstra explores all possible paths, it guarantees finding the shortest path but is not very efficient in large search spaces where heuristic guidance could narrow down the search.
+- **g(n)**: The cost to reach the node `n` from the start node.
+- **h(n)**: The heuristic function that estimates the remaining distance from node `n` to the goal (commonly using Manhattan or Euclidean distance).
 
-**Time Complexity**: O(V^2) for an unoptimized version, where V is the number of vertices (can be reduced to O(V + E log V) using a priority queue).
+## Dijkstra's Algorithm
 
-### 3. Greedy Best-First Search (BFS)
+### Explanation
+Dijkstra's algorithm is a classic shortest-path algorithm. It explores every possible path and guarantees finding the shortest path in a graph with non-negative edge weights.
 
-The Greedy Best-First Search algorithm is a faster but less optimal alternative to A*. It focuses entirely on minimizing the estimated distance to the goal, without considering the cost to reach the current node. This greedy approach makes it faster but can often lead to non-optimal paths, especially in complex environments with many obstacles.
+Dijkstra's algorithm is similar to A\* but without the heuristic. It only considers the actual cost to reach a node, meaning it explores every possible node until it finds the goal. This makes it less efficient than A\*, especially in large search spaces.
 
-- **Heuristic Function (h)**: Similar to A*, this algorithm uses the Euclidean or Manhattan distance to estimate the distance to the goal, but it doesn’t account for the actual cost g(n) of reaching a node.
-- **Total Cost (f)**: Only the heuristic is considered (i.e., f(n) = h(n)).
+The algorithm maintains a cost value for each node and iteratively selects the node with the lowest cost (smallest distance from the start) to expand.
 
-This makes Greedy BFS much faster than Dijkstra and A*, but it does not guarantee the shortest path.
+### Time Complexity
+Dijkstra's algorithm has a time complexity of **O(V + E \* log(V))**, where:
+- `V` is the number of vertices (nodes).
+- `E` is the number of edges in the graph.
 
-**Time Complexity**: O(b^m), where b is the branching factor and m is the maximum depth of the search space.
+### Formula
+For Dijkstra's algorithm, the cost function **g(n)** is:
 
-## Algorithm Comparison
+g(n) = distance from start to n
 
-| Algorithm         | Time Complexity       | Optimality                  | Heuristic | Description                                 |
-|-------------------|-----------------------|-----------------------------|-----------|---------------------------------------------|
-| A*                | O(b^d)                | Optimal (with admissible heuristic) | Yes       | Balances exploration and goal-reaching      |
-| Dijkstra          | O(V^2) or O(V + E log V) | Optimal                    | No        | Explores all paths to guarantee shortest path |
-| Greedy Best-First | O(b^m)                | Suboptimal                  | Yes       | Quick but not necessarily optimal           |
 
-## Installation
+There is no heuristic function, so it evaluates each node based solely on the cost to reach it.
 
-Clone the repository:
+## Greedy Best-First Search
 
-```bash
-git clone https://github.com/yourusername/path-planning-algorithms.git
-cd path-planning-algorithms
+### Explanation
+**Greedy Best-First Search** is a heuristic-based algorithm that always selects the node closest to the goal according to the heuristic function, without considering the actual cost to reach the node (i.e., it ignores the `g(n)` value used in A\*).
+
+This algorithm can be faster than A\* or Dijkstra's because it prioritizes nodes based solely on their estimated distance to the goal. However, it does not guarantee finding the shortest path because it doesn't account for the cost already incurred to reach a node.
+
+Greedy BFS uses only the **h(n)** value to select the next node to explore, where **h(n)** is the heuristic estimate of the cost from the current node to the goal.
+
+### Time Complexity
+The time complexity of Greedy BFS is **O(b^d)**, where:
+- `b` is the branching factor (the number of nodes expanded at each step).
+- `d` is the depth of the solution.
+
+Because it doesn't necessarily explore all nodes in a balanced way, Greedy BFS can run faster than A\* but may result in a non-optimal path.
+
+### Formula
+For Greedy BFS, the evaluation function **h(n)** is used:
+
+h(n) = heuristic estimate from n to the goal
+
+The heuristic can be chosen based on the environment:
+- **Manhattan Distance** for grid-based environments:
+h(n) = |x1 - x2| + |y1 - y2|
+
+- **Euclidean Distance** for continuous environments:
+h(n) = sqrt((x1 - x2)^2 + (y1 - y2)^2)
+
+
+## Conclusion
+Each algorithm has its advantages and trade-offs:
+- **A\* algorithm**: Balances between exploration and exploitation, making it both efficient and optimal in most cases.
+- **Dijkstra's algorithm**: Guarantees the shortest path but can be slower in large spaces.
+- **Greedy Best-First Search**: Fast but may not always find the shortest path.
+
+This project provides a visual demonstration of these algorithms using Pygame. Try out the algorithms to see how they perform in different grid environments!
+
+## References
+- Russell, S., & Norvig, P. (2009). *Artificial Intelligence: A Modern Approach*. Prentice Hall.
+- Cormen, T. H., Leiserson, C. E., Rivest, R. L., & Stein, C. (2009). *Introduction to Algorithms*. MIT Press.
+
+
