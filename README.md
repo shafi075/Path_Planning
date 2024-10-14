@@ -71,7 +71,7 @@ Dijkstra's algorithm has a time complexity of **\( O(V + E \log V) \)**, where:
 For Dijkstra's algorithm, the cost function **\( g(n) \)** is:
 
 \[
-g(n) = \text{distance from start to } n
+g(n) = distance from start to n
 \]
 
 There is no heuristic function, so it evaluates each node based solely on the cost to reach it.
