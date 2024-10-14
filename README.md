@@ -130,3 +130,9 @@ To run the path planning algorithms, follow these steps:
    ```bash
    python3 <name_of_the_file>.py
 
+## Conclusion
+Each algorithm has its advantages and trade-offs:
+- **A\* Algorithm**: Balances between exploration and exploitation, making it both efficient and optimal in most cases.
+- **Dijkstra's Algorithm**: Guarantees the shortest path but can be slower in large spaces.
+- **Greedy Best-First Search**: Fast but may not always find the shortest path.
+
