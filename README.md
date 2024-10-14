@@ -96,20 +96,20 @@ Because it doesn't necessarily explore all nodes in a balanced way, Greedy BFS c
 For Greedy BFS, the evaluation function **\( h(n) \)** is used:
 
 \[
-h(n) = \text{heuristic estimate from } n \text{ to the goal}
+h(n) = heuristic estimate from **n** to the goal}
 \]
 
 The heuristic can be chosen based on the environment:
 - **Manhattan Distance** for grid-based environments:
   
 \[
-h(n) = |x_1 - x_2| + |y_1 - y_2|
+h(n) = |x1 - x2| + |y1 - y2|
 \]
 
 - **Euclidean Distance** for continuous environments:
 
 \[
-h(n) = \sqrt{(x_1 - x_2)^2 + (y_1 - y_2)^2}
+h(n) = sqrt{(x1 - x2)^2 + (y1 - y2)^2}
 \]
 
 ## Installation and Running the Program
